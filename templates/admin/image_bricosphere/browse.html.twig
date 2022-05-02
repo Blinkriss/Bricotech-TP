@@ -1,0 +1,31 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Images des Bricosphères{% endblock %}
+
+{% block body %}
+<h2>Images des Bricosphères</h2>
+<a href="{{ path('admin_imagebricosphere_add') }}" class="bouton">Ajouter une image pour les bricosphères</a>
+<table class="table table-striped table-hover">
+<thead>
+    <tr>
+    <th scope="col">#</th>
+    <th scope="col">Prévisualisation</th>
+    <th scope="col" class="col-1">Action</th>
+    </tr>
+</thead>
+<tbody>
+    {% for imageBricosphere in imageBricosphere %}
+        <tr>
+        <th scope="row">{{ imageBricosphere.id }}</th>
+        <td><img src="{{ asset('assets/images/bricospheres/'~imageBricosphere.name)}}" class="imagebricosphere" alt=""></td>
+        <td>
+            <form action="{{ path('admin_imagebricosphere_delete', {'id': imageBricosphere.id}) }}" method="post" class="d-inline">
+                <input type="hidden" name="_method" value="delete">
+                <button class="delete"><span class="iconify" data-icon="typcn:delete-outline" data-inline="false"></span></button>
+            </form>
+        </td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

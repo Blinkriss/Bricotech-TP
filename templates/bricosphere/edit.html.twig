@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier ma bricosphère{% endblock %}
+
+{% block body %}
+<section  class="row col-10 m-auto">
+    <div class="main-title">
+        <h1>Modifier ma bricosphère</h1>
+    </div>
+    <div class="col">
+        {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        <div class="my-3">Choisissez une photo pour la Bric O'sphère</div>        
+        <div class='check-avatars'>
+            {% for imageBricosphere in form.imageBricosphere %}
+                <div class="image-field">
+                    <img src="{{ asset('assets/images/bricospheres/'~imageBricosphere.vars.label) }}" style="width:150px;" alt="">
+                    {{ form_row(imageBricosphere) }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="bouton">Modifier</button>
+        {{ form_end(form) }}
+    </div>
+</section>
+
+{% endblock %}

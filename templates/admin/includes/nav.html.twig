@@ -1,0 +1,63 @@
+<header>
+    <div id="logo"><a href="{{ path('admin_home') }}" alt="retour à l'accueil"><img src="{{ asset('assets/admin/images/BricOtech_Logo400x70px_blanc.png') }}" alt="La Bric O'tech" class="img-fluid"></a></div>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ path('admin_user_browse') }}">Utilisateurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_booking_browse') }}">Réservations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_avatar_browse') }}">Avatars</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_talent') }}">Talents</a>
+                </li>
+                <li class="nav-item dropend">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Outils
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="{{ path('admin_tool_browse') }}">Liste des Outils</a></li>
+                    <li><a class="dropdown-item" href="{{ path('admin_tool_category_browse') }}">Gérer les catégories d'outils</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropend">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Bricosphères
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="{{ path('admin_bricosphere_browse') }}">Liste des Bricosphères</a></li>
+                    <li><a class="dropdown-item" href="{{ path('admin_imagebricosphere_browse') }}">Listes des images des Bricosphères</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropend">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Pages statiques
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="{{ path('admin_faq_browse') }}">FAQ</a></li>
+                    <li><a class="dropdown-item" href="#">À propos</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropend">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Blog
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="{{ path('admin_blog_article_browse') }}">Articles</a></li>
+                    <li><a class="dropdown-item" href="{{ path('admin_blog_category_browse') }}">Catégories</a></li>
+                    </ul>
+                </li>
+            </ul>
+            </div>
+        </div>
+        </nav>
+</header>

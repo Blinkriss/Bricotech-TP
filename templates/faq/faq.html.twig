@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La FAQ de La Bric O'tech{% endblock %}
+
+{% block body %}
+<section  class="row static">
+    <div class="image col-md"><img src="{{ asset('assets/images/charte/faq.png') }}"></div>
+    <div class="text col-md align-self-center">
+        <h1><small>La Bric O’tech :</small><br>
+            FAQ
+        </h1>
+        <div class="accordion" id="accordionFAQ">
+            {% for faq in faqs %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" >
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="{{ '#collapse'~faq.id }}" aria-expanded="true" aria-controls="{{ 'collapse'~faq.id }}">
+                    {{ faq.question }} 
+                </button>
+                </h2>
+                <div id="{{ 'collapse'~faq.id }}" class="accordion-collapse collapse {% if faq.id == faqs[0].id %} show{% endif %}" aria-labelledby="{{ 'heading'~faq.id }}" data-bs-parent="#accordionFAQ">
+                
+                <div class="accordion-body">
+                    {{ faq.answer|raw }}
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

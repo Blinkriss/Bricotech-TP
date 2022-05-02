@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}La Bric O'tech - Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="col">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="bouton">Modifier ma réservation</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

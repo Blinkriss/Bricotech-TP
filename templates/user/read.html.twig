@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+        <div class="main-title">
+            <h1>Mon bric O'space</h1>
+        </div>
+        <section class="row col-10 m-auto">
+                <div class="content-details col">
+                    <div class="row bricospheres">
+                        <div class="col list-detail me-5">
+                            {% if bricosphereCreator is defined %}
+                            <h4 class="light-blue"><span class="iconify light-blue" data-icon="raphael:people" data-inline="false"></span> Mes Bric O'sphères : </h4>
+                            <a href="{{ path('bricosphere_add')}}" class="bouton create">Créer</a>
+                              <ul class="list-group list-group-flush">
+                                {% for bricosphere in bricosphereCreator %}
+                                <li class="list-group-item"><a href="{{ path('bricosphere_read', {'id':bricosphere.id}) }}">{{ bricosphere.title }}</a> 
+                                    <div class="manage-link">
+                                        <a href="{{ path('bricosphere_read', {'id':bricosphere.id}) }}">Visiter</a>
+                                        <a href="{{ path('bricosphere_edit', {'id':bricosphere.id}) }}" class="edit"><span class="iconify edit" data-icon="akar-icons:edit" data-inline="false"></span></a>
+                                        <form method="post" action="{{ path('bricosphere_delete', {'id':bricosphere.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette BricOsphère?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button class="delete"><span class="iconify" data-icon="typcn:delete-outline" data-inline="false"></span></button>
+                                        </form>
+                                    </div>
+                                </li>
+                              {% endfor %}
+                              </ul>
+                              {% endif %}     
+                        </div>
+            
+                        <div class="col list-detail ms-5">
+                            <h4 class="red"><span class="iconify red" data-icon="raphael:people" data-inline="false"></span> Les Bric O'sphères dont je fais partie : </h4>
+                             <a href="{{ path('bricosphere_browse')}}" class="bouton create">Rejoindre d'autres Bric O'spheres</a>
+                                {% if bricosphere is defined %}
+                                    {% if bricosphere is not empty %}
+                                    <ul class="list-group list-group-flush">
+                                    <!-- POSSIBILITE DE SE DESABONNER MANQUANTE -->
+                                        {% for bricosphere in bricosphere %}
+                                        <li class="list-group-item"><a href="{{ path('bricosphere_read', {'id':bricosphere.id}) }}">{{ bricosphere.title }}</a>
+                                            <div class="manage-link">
+                                                <a href="{{ path('bricosphere_read', {'id':bricosphere.id}) }}">Visiter</a>
+                                                <form method="post" action="{{ path('bricosphere_quit', {'id':bricosphere.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir quitter cette BricOsphère?')">
+                                                    <input type="hidden" name="_method" value="POST">
+                                                    <button class="delete"><span class="iconify" data-icon="typcn:delete-outline" data-inline="false"></span></button>
+                                                </form>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row outils fluid">
+                            <h4 class="dark-blue"><span class="iconify dark-blue" data-icon="fa-solid:tools" data-inline="false"></span> Mes Outils</h4>
+                            <a href="{{ path('tool_add')}}" class="bouton create">Ajouter un outil</a>
+                        <div class="tools-title">                   
+                            {% if user.tools is not empty %}
+                                <div class="dropdown">
+                                    {% if toolCategories is not empty %}
+                                        <button class="bouton-filtre dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Filtrer
+                                        </button>
+                                        <ul class="dropdown-menu" id="myDropdown" aria-labelledby="dropdownMenuButton2">
+                                            {# <li><input type="text" placeholder="Rechercher.." id="myInput" onkeyup="filterFunction()"></li> #}
+                                            <li><button class="dropdown-item" onclick="filterSelection('all')">Toutes</button></li>
+                                                {% for toolCategory in toolCategories %}
+                                                    <li><button class="dropdown-item" onclick="filterSelection('{{toolCategory.name}}')">{{ toolCategory.name }}</button></li>
+                                                {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            {% endif %} 
+                        </div>
+                        
+                        <div class="row tools-detail">
+                            {% if user.tools is not empty %}
+                                {% for tool in user.tools %}
+                                    <div class="card col-2 {% if tool.toolCategory is not empty %}filterDiv {{tool.toolCategory.name}}{% endif %}">
+                                    <a href="{{ path('tool_read',{'id':tool.id}) }}">
+                                        {% for image in tool.images %}
+                                            <img src="{{ asset('/assets/images/tools/'~image.name) | imagine_filter('miniature_list_tool') }}" class="card-img-top tool-avatar" alt="{{ tool.name }}">
+                                        {% endfor %}
+                                        <div class="card-body">
+                                            <p class="card-title">{{ tool.name }}</p>
+                                            <bouton class="bouton">Gérer</bouton>
+                                        </div>
+                                    </a>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                            {% if user.tool is defined %}
+                                {% set count = 0 %}
+                                    {% for tool in user.tool %}
+                                       {% set count = count + 1 %}
+                                        {% if count > 5 %}
+                                        <div class="load"><p>Voir +</p></div>
+                                        {% endif %}
+                                    {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+        </section>
+{% endblock %}

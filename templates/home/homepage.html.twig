@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bricothèque{% endblock %}
+
+{% block body %}
+    <section class="row diaporama">
+      <div id="diaporama" class="col-lg align-self-center">
+          <div class="defilement-image"><img src="{{ asset('assets/images/charte/test.jpg') }}"></div>
+          <div class="masque"></div>
+      </div>
+      <aside class="col-lg align-self-center">
+        <h1><small>La Bric O’tech :</small><br>
+          Emprunte les outils<br>qu’il te manque<br>à tes amis !
+        </h1>
+        <p>Qui ne s'est jamais retrouvé en plein milieu d'une séance de bricolage, et se rendre compte qu'il lui manque un outil ? Ou tout simplement, avoir l'envie de réaliser un projet, et d'avoir besoin d'un outil spécifique, mais investir pour l'utiliser une seule fois... hum... Voilà comment est né le site de la Bric O'tech !</p>
+        <div class="info">Mais qui a eu cette idée ? <a href="{{ path('static_about') }}">Je découvre</a></div>
+      </aside>
+    </section>
+
+    <section id="resume" class="row">
+      <h2>Entrez dans la Bric’Osphère et partagez vos outils avec vos amis !</h2>
+      <div class="picto-accueil col-md">
+        <img src="{{ asset('assets/images/charte/perceuse.png') }}" alt="perceuse">
+        <p>Inscrivez-vous à La Bric O’tech <b>et créez votre Bric O’sphère !</b></p>
+      </div>
+      <div class="picto-accueil col-md">
+        <img src="{{ asset('assets/images/charte/scie.png') }}" alt="scie">
+        <p><b>Invitez vos amis Bric O’lo</b> à vous y rejoindre ! </p>
+      </div>
+      <div class="picto-accueil col-md">
+        <img src="{{ asset('assets/images/charte/rouleau.png') }}" alt="rouleau">
+        <p>Prêtez et empruntez les outils <b>que vous avez besoin ! </b></p>
+      </div>
+    </section>
+    
+    <main>
+      <section  class="row col-10 m-auto concept">
+          <div class="text col-6 align-self-center">
+            <h3>Le concept de la Bric’Otech</h3>
+            <p>Concept collaboratif et solidaire, la Bric O'tech se veut ouverte à tous. Mais le mot d'ordre qui doit régner entre Bric O'lo, c'est la confiance ! Et entre amis, on se fait toujours confiance !</p>
+            <p>Découvrez plus en détail tout le concept de la Bric O'tech en cliquant juste en dessous !</p>
+            <div class="info">Je veux en savoir plus <a href="{{ path ('faq_browse')}}">Je découvre</a></div>
+          </div>
+          <div class="image animated col-6 align-self-center" data-scrollanim="righttoleft"><img src="{{ asset('assets/images/charte/concept.png') }}"></div>
+
+      </section>
+
+      <section  class="row col-10 m-auto news">
+        <div class="image animated col-6 align-self-center" data-scrollanim="lefttoright"><img src="{{ asset('assets/images/charte/news.png') }}"></div>
+        <div class="text col-6 align-self-center">
+          <h3>La Bric’Onews</h3>
+          <p>Tu veux recevoir toutes les astuces bricolages de la Bric O'tech sur ta boite mail, ou tout simplement être tenu informé des dernières actualités de la plateforme ? N'hésite pas à t'incrire à la newsletter de la Bric O'tech ! </p>
+          <div>
+            <input type="text" value="Veuillez renseigner votre email">
+          <a class="bouton" href="#">Je m'inscris à la newsletter</a>
+          </div>
+        </div>
+    </section>
+  </main>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La Bric O'tech, le blog !{% endblock %}
+
+{% block body %}
+<div class="main-title">
+    <h1>Le Blog</h1>
+</div>
+<section  class="row col-10 m-auto blog">
+     <div class="text col-md align-self-center">
+        <article>
+            <h2 class="blogtitle">{{ article.title }}</h2>
+            <span>Publié le {{ article.createdAt|date("d/m/Y") }} dans la catégorie {{ article.blogCategory}}</span>
+            <p >{{ article.content|raw}}</p>
+            </article>
+    </div>
+</section>
+{% endblock %}

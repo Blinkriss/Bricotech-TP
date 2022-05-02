@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier ma réservation{% endblock %}
+
+{% block body %}
+<section  class="row col-10 m-auto">
+    <div class="main-title">
+        <h1>Modifier ma réservation</h1>
+    </div>
+    <div class="col">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="bouton">Modifier ma réservation</button>
+        {{ form_end(form) }}
+    </div>
+</section>
+
+{% endblock %}

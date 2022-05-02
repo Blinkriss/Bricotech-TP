@@ -1,0 +1,64 @@
+App\Entity\Bricosphere:
+  bricosphere_{1..15}:
+    title: '<catchphrase()>'
+    createdAt: '<dateTime()>'
+    creator: '@user_<numberBetween(1, 15)>'
+    users: '10x @user_*'
+    
+App\Entity\Image:
+  image_{1..15}:
+    name: '<imageUrl()>'
+    tool: '@tool_<numberBetween(1, 30)>'
+    
+App\Entity\Talent:
+  talent_{1..15}:
+    name: '<word()>'
+    
+App\Entity\ToolCategory:
+  toolcategory_{1..15}:
+    name: '<word()>'
+    createdAt: '<dateTime()>'
+
+App\Entity\Tool:
+  tool_{1..30}:
+    name: '<word()>'
+    brand: '<word()>'
+    description: 'catchphrase()'
+    createdAt: '<dateTime()>'
+    toolCategory: '@toolcategory_<numberBetween(1, 15)>'
+    isActivate: '<numberBetween(0,1)>'
+    user: '@user_<numberBetween(1, 15)>'
+
+App\Entity\Avatar:
+  avatar_{1..15}:
+    name: '<imageUrl()>'
+
+App\Entity\User:
+  user_{1..150}:
+    lastname: '<lastname()>'
+    firstname: '<firstname()>'
+    address: '<address()>'
+    city: '<city()>'
+    postal_code: '<randomNumber(5)>'
+    email: '<email()>'
+    password: '\$argon2id\$v=19\$m=65536,t=4,p=1\$ednNbK2QXemFWvftHLnThQ\$8OLOeB3EHk6rjYCti0pi+8sAigyPaCoNN70XoGjX9qc'
+    createdAt: '<dateTime()>'
+    avatar: '@avatar_*'
+    phone: 'serviceNumber()'
+
+App\Entity\Booking:
+  booking_{1..15}:
+    booker: '@user_<numberBetween(1,15)>'
+    tool: '@tool_<numberBetween(1,30)>'
+    startDate: '<dateTime()>'
+    endDate: '<dateTime()>'
+    createdAt: '<dateTime()>'
+
+App\Entity\Messages:
+  messages_{1..15}:
+    title: '<sentence()>'
+    message: '<catchphrase()>'
+    created_at: '<dateTime()>'
+    is_read: '<numberBetween(0,1)>'
+    sender: '@user_<numberBetween(1,15)>'
+    recipient: '@user_<numberBetween(1,15)>'

@@ -1,0 +1,32 @@
+  </main>
+
+  <footer>
+    <div id="main-footer">
+      <div class="link1">
+        <h5>La Bric O'tech</h5>
+        <ul>
+          <li>
+            <a href="{{ path('blog_article_browse') }}" alt="blog">Le blog</a>
+          </li>
+          <li>
+            <a href="{{ path('faq_browse') }}" alt="faq">FAQ</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="link2">
+        <h5>Information</h5>
+        <ul>
+          <li>
+            <a href="{{ path('static_legacy') }}" alt="Mentions légales">Mentions légales</a>
+          </li>
+          <li>
+            <a href="{{ path('static_cgu') }}" alt="CGU">Conditions Générales d'Utilisation</a>
+          </li>
+        </ul>
+      </div>
+      <div id="copyright">
+        <p>{{ 'now' | date("Y") }} Copyright  © La Bric O’tech</p>
+      </div>
+    </div>
+  </footer>

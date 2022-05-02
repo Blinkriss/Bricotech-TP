@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon outil{% endblock %}
+
+{% block body %}
+<section  class="row col-10 m-auto">
+    <div class="main-title">
+        <h1>Éditer mon outil</h1>
+    </div>
+    <div class="col">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {# {{ dump (app.user.tools)}} #}
+
+            {# Si la route est "tool_edit on affiche les images #}
+            {% if app.request.attributes.get('_route') == 'tool_edit' %}
+                {% for image in tool.images %}
+                    <div>
+                        <img src="{{ asset('assets/images/tools/'~image.name) }}" alt="" width="150">
+
+                        {# On ajoute un lien permettant de supprimer une image (sera géré en Ajax) #}
+                        <a href="{{ path('tool_delete_image', {id: image.id})}}" data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer</a>
+                    </div>
+                {% endfor %}
+            {% endif %} 
+
+            <button type="submit" class="bouton">Modifier mon outil</button>
+        {{ form_end(form) }}
+    </div>
+</section>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/deleteImages.js') }}"></script>
+{% endblock %}

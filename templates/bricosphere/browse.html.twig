@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de mes bricosphères
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="main-title">
+            <h1>Liste des Bric O'spheres</h1>
+        </div>
+        <section class="row col-10 m-auto">
+              <div class="content-details col">
+              <a class="retour" href="{{ path('user_read') }}"><span class="iconify" data-icon="dashicons:arrow-left" data-inline="false"></span> Retourner sur mon Bric O'space</a>
+                  <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nom de la bricosphere</th>
+                        <th scope="col">Propriétaire</th>
+                        <th scope="col" class="col-1">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for bricosphere in bricospheres %}
+                    <tr>
+                        <td> <a href=" {{ path('bricosphere_read', {'id':bricosphere.id}) }} "> {{ bricosphere.title }}</a></td>
+                        <td>{{ bricosphere.creator.firstname }} {{ bricosphere.creator.lastname }}</td>
+                        <td>
+                            <form method="post" action="{{ path('bricosphere_join', {'id':bricosphere.id}) }}">
+                                <input type="hidden" name="_method" value="POST">
+                                <button class="btn"><a class=""> Rejoindre <span class="iconify" data-icon="bx:bxs-down-arrow-circle" data-inline="false"></span></a></button>
+                            </form>
+
+                            <form method="post" action="{{ path('bricosphere_quit', {'id':bricosphere.id}) }}">
+                                <input type="hidden" name="_method" value="POST">
+                                <button class="btn"><a class="delete"> Quitter <span class="iconify" data-icon="bx:bxs-down-arrow-circle" data-inline="false"></span></a></button>
+                            </form>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+              </div>
+          </section>
+      </main>
+
+
+
+{% endblock %}

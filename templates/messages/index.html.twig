@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La Bric O'tech - Messagerie{% endblock %}
+
+{% block body %}
+<div class="main-title">
+    <h1>Messagerie</h1>
+</div>
+<section class="row col-10 m-auto">
+    <div class="content-details col">
+        <p>Résumé de la messagerie</p>
+        <p>Reçus : {{ app.user.received|length }}</p>
+        <p>Envoyés : {{ app.user.sent|length }}</p>
+
+        <a href="{{ path("received") }}" class="bouton create">Boîte de réception</a>
+
+        <a href="{{ path("sent") }}" class="bouton create">Eléments envoyés</a>
+    </div>
+</section>
+{% endblock %}

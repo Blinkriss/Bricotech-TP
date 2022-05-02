@@ -1,0 +1,182 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La bric O'tech{% endblock %}
+
+{% block body %}
+<div class="main-title">
+    <h1>{{ bricosphere.title }}</h1>
+</div>
+
+<section class="row col-10 m-auto">
+    <div class="content-details col">
+
+    {% if app.user.id != bricosphere.creator.id %}
+    <a class="retour" href="{{ path('user_read') }}"><span class="iconify" data-icon="dashicons:arrow-left" data-inline="false"></span> Retourner sur mon Bric O'space</a>
+        <div class="user-tool row border-top border-bottom py-3 mb-5">
+            <h4 class="row border-bottom pb-3 mb-3">Appartient à</h4>
+            <div class="user-tool-name col-md">
+                <span class="iconify" data-icon="carbon:user-avatar-filled" data-inline="false"></span>
+                {{ bricosphere.creator.firstname }}
+                {{ bricosphere.creator.lastname }}
+            </div>
+            <div class="user-tool-talent col-md">
+                <h5>
+                    <span class="iconify" data-icon="grommet-icons:user-worker" data-inline="false"></span>
+                    Ses talent</h5>
+                <ul class="list-group list-group-flush">
+                    {% for talent in bricosphere.creator.talents %}
+                        <li class="list-group-item">{{ talent.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="user-tool-contact col-md">
+                <p class="user-tool-address">
+                    <span class="iconify" data-icon="ant-design:home-filled" data-inline="false"></span>
+                    {{ bricosphere.creator.address }}
+                    <span class="cpsphere">{{ bricosphere.creator.postalCode }}</span>
+                    <span class="citysphere">{{ bricosphere.creator.city }}</span></p>
+
+                {# <p class="user-tool-phone">
+                    <span class="iconify" data-icon="carbon:phone-filled" data-inline="false"></span>
+                    {{ bricosphere.creator.phone }}</p>
+                <p class="user-tool-mail">
+                    <span class="iconify" data-icon="ic:round-email" data-inline="false"></span>
+                    {{ bricosphere.creator.email }}</p> #}
+                <a href="{{ path('messages_send', {'id': bricosphere.creator.id}) }}"><span class="iconify" data-icon="ic:sharp-mail" data-inline="false"></span> Contacter</a>
+            </div>
+            <div class="user-tool-map col-md-2">
+                <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+                <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script><script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+                <div id="mapidtool" style="width: 180px; height: 180px;"></div>
+            </div>
+        </div>
+        {% else %}
+        <div class="row d-flex justify-content-between border-bottom mb-5">
+                <a class="retour" href="{{ path('user_read') }}"><span class="iconify" data-icon="dashicons:arrow-left" data-inline="false"></span> Retourner sur mon Bric O'space</a>
+                <div class="edit-row">
+                    {% if is_granted('EDIT', bricosphere)%}
+                        <a href="{{ path('bricosphere_edit', {'id': bricosphere.id}) }}" class="tool edit" alt="éditer" title="Éditer">
+                            <span class="iconify" data-icon="akar-icons:edit" data-inline="false"></span>
+                        </a>
+                    {% endif %}
+                    {% if is_granted('DELETE', bricosphere)%}
+                        <form action="{{ path('bricosphere_delete', {'id': bricosphere.id}) }}" method="post" class="d-inline">
+                            <input type="hidden" name="_method" value="delete">
+                            <button class="tool delete">
+                                <span class="iconify" data-icon="typcn:delete-outline" data-inline="false"></span>
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+        </div>
+        {% endif %}
+
+        <div class="img-container">
+           <!-- <img src="{# asset('/assets/images/bricospheres/'~bricosphere.imageBricosphere.name) | imagine_filter('miniature_bricosphere') }}" class="brico-img img-fluid" alt="{{ bricosphere.imageBricosphere.name #}"> -->
+        </div>
+        <div class="row outils">
+            <div class="tools-title">
+                <h4 class="dark-blue">
+                    <span class="iconify dark-blue" data-icon="fa-solid:tools" data-inline="false"></span>Les Outils disponibles:</h4>
+                {# {% for users in bricosphere.users %}
+                                {% if users.tools is not empty %}
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Filtrer
+                                        </button>
+                                        <ul class="dropdown-menu" id="myDropdown" aria-labelledby="dropdownMenuButton2">
+                                        <li><input type="text" placeholder="Rechercher.." id="myInput" onkeyup="filterFunction()"></li>
+                                            {% for tools in users.tools %}
+                                                <li><button class="dropdown-item" onclick="filterSelection('{{tools.toolCategory.name}}')">{{ tools.toolCategory.name }}</button></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            {% endfor %} #}
+            </div>
+            <div class="row tools-detail">
+                {% for tool in bricosphere.creator.tools %}
+                    {% if app.user != bricosphere.creator %}
+                        {% if tool.isActivate == true %}
+                            <div class="tools-item col-2">
+                                {% for image in tool.images %}
+                                    <img src="{{ asset('/assets/images/tools/'~image.name) | imagine_filter('miniature_list_tool') }}" class="tool-avatar" alt="{{ tool.name }}">
+                                {% endfor %}
+                                <p>{{ tool.name }}</p>
+                                {% if app.user.id == bricosphere.creator.id %}
+                                    <a class="bouton" href="{{ path('tool_read', {'id': tool.id}) }}">Gérer</a>
+                                {% else %}
+                                    <a class="bouton" href="{{ path('tool_read', {'id': tool.id}) }}">Réserver</a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                {% for users in bricosphere.users %}
+                    {% for tool in users.tools %}
+                        {% if tool.isactivate == true %}
+                            <div class="tools-item col-2 {% if tool.toolCategory is not empty %}filterDiv {{tool.toolCategory.name}}{% endif %}">
+                                {% for image in tool.images %}
+                                    <img src="{{ asset('/assets/images/tools/'~image.name) | imagine_filter('miniature_list_tool') }}" class="tool-avatar" alt="{{ tool.name }}">
+                                {% endfor %}
+                                <p>{{ tool.name }}</p>
+                                {% if app.user.id == users.id %}
+                                    <a class="bouton" href="{{ path('tool_read', {'id': tool.id}) }}">Gérer</a>
+                                {% else %}
+                                    <a class="bouton" href="{{ path('tool_read', {'id': tool.id}) }}">Réserver</a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row outils">
+            <div class="tools-title">
+                <h4 class="light-blue">
+                    <span class="iconify light-blue" data-icon="fa-solid:tools" data-inline="false"></span>Membres de la bricosphère:
+                </h4>
+            </div>
+            <div class="row tools-detail">
+                {% for user in bricosphere.users %}
+                    <div class="sphere_user-item col-2">
+                        <img class="sphere_user-avatar" src="{{ asset('assets/images/avatars/'~user.avatar.name) }}" alt="nom de l'utilisateur">{{user.firstname}}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+    <script>
+    function init(){
+    let city = document.querySelector('.citysphere').textContent;
+    let cp = document.querySelector('.cpsphere').textContent;
+
+    $.ajax({
+                //URL de l'API
+                url: "https://api-adresse.data.gouv.fr/search/?q=f"+city+"%20"+cp+"&type=municipality&autocomplete=1",
+                //Méthode appelée lorsque le téléchargement a fonctionné
+                success: function(geojson) {
+                    //Affichage des données dans la console
+                    console.log(geojson.features[0].geometry.coordinates[0]);
+                var map = L.map('mapidtool', {
+                    center: [geojson.features[0].geometry.coordinates[1], geojson.features[0].geometry.coordinates[0]],
+                    zoom: 11 });
+                L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                    minZoom: 1,
+                    maxZoom: 20
+                    }).addTo(map);
+                },
+                
+                //Méthode appelée lorsque le téléchargement a échoué
+                error: function() {
+                    alert("Erreur lors du téléchargement !");
+                }      
+            });}
+    document.addEventListener('DOMContentLoaded', init);
+</script>
+{% endblock %}
+

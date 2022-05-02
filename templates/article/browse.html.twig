@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La Bric O'tech, le blog !{% endblock %}
+
+{% block body %}
+
+<div class="main-title">
+    <h1>Le Blog</h1>
+</div>
+<section  class="row col-10 m-auto blog">    
+    <div class="text col-md align-self-center">
+        {% for articles in articles %}
+        <article class="preview">
+            <h2 class="blogtitle">{{ articles.title }}</h2>
+            <span>Publié le {{ articles.createdAt|date('d/m/Y') }} dans la catégorie {{ articles.blogCategory}}</span>
+            <p >{{ articles.content|slice(0, 350)|raw}} [...]</p>
+        </article>
+        <a href="{{ path('blog_article_read', {'id': articles.id}) }}" class="bouton">Lire la suite</a>
+        {% endfor %}
+        {{ knp_pagination_render(articles, 'includes/pagination.html.twig') }}
+    </div>
+</section>
+
+{% endblock %}

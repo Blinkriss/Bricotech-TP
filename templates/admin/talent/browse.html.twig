@@ -1,0 +1,36 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}La Bric O'Tech -- Talent{% endblock %}
+
+{% block body %}
+<h2>Talents</h2>
+  <a href="{{ path('admin_talent_add') }}" class="bouton">Ajouter un talent</a>
+
+  <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nom</th>
+          <th scope="col" class="col-1">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for talent in talents %}
+        <tr>
+          <th scope="row">{{ talent.id }}</th>
+          <td>{{ talent.name }}</td>
+          <td>
+            <a href="{{ path('admin_talent_edit', {'id': talent.id}) }}" class="edit" alt="éditer" title="Éditer">
+              <span class="iconify" data-icon="akar-icons:edit" data-inline="false"></span>
+            </a>
+
+            <form action="{{ path('admin_talent_delete', {'id': talent.id}) }}" method="post" class="d-inline">
+              <input type="hidden" name="_method" value="delete">
+              <button class="delete"><span class="iconify" data-icon="typcn:delete-outline" data-inline="false"></span></button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

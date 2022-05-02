@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition du profil{% endblock %}
+
+{% block body %}
+<section  class="row col-6 m-auto">
+    <div class="main-title">
+        <h1>Éditer mon profil</h1>
+    </div>
+    <div class="col">
+        {{ form_start(form) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.password) }}
+            {{ form_row(form.address) }}
+            {{ form_row(form.city) }}
+            {{ form_row(form.postalCode) }}
+            {{ form_row(form.phone) }}
+            {{ form_row(form.talents) }}
+            <div class="my-3">Choisissez votre avatar</div>
+            <div class='check-avatars'>
+                {% for avatar in form.avatar %}
+                    <div class="image-field">
+                        <img src="{{ asset('assets/images/avatars/'~avatar.vars.label) }}" style="width:80px;" alt="">
+                        {{ form_row(avatar) }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="bouton">Modifier</button>
+        {{ form_end(form) }}
+        {% if is_granted('DELETE', app.user) %}
+        <form method="post" action="{{ path('user_delete', {'id':app.user.id}) }}">
+            <input type="hidden" name="_method" value="POST"/>
+            <input type="hidden" name="token" value="{{ csrf_token('delete') }}"/>
+            <button class="btn">Supprimer mon compte<a class="delete"><span class="iconify" data-icon="typcn:delete-outline" data-inline="false"></span></a></button>
+        </form>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

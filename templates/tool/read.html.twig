@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les outils{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block body %}
+<section  class="row col-10 m-auto">
+    <div class="main-title">
+        <h1>{{ tool.name }}</h1>
+    </div>
+    <div class="col">
+        {% if app.user.id != tool.user.id %}
+        <a class="retour" href="{{ path('user_read') }}"><span class="iconify" data-icon="dashicons:arrow-left" data-inline="false"></span> Retourner sur mon Bric O'space</a>
+            <div class="user-tool row border-top border-bottom py-3 mb-5">
+                <h4 class="row border-bottom pb-3 mb-3">Appartient à </h4>
+                <div class="user-tool-name col-md"><span class="iconify" data-icon="carbon:user-avatar-filled" data-inline="false"></span> {{ tool.user.firstname }} {{ tool.user.lastname }}</div>
+                <div class="user-tool-talent col-md">
+                    <h5><span class="iconify" data-icon="grommet-icons:user-worker" data-inline="false"></span> Ses talents</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for talent in tool.user.talents %}
+                        {# {{ dump (talent)}} #}
+                            <li class="list-group-item">{{ talent.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="user-tool-contact col-md">
+                    <p class="user-tool-address">
+                    <span class="iconify" data-icon="ant-design:home-filled" data-inline="false"></span> 
+                    {{ tool.user.address }}
+                    <span class="cptool">{{ tool.user.postalCode }} </span>
+                    <span class="citytool">{{ tool.user.city }}</span></p>
+                    {# <p class="user-tool-phone"><span class="iconify" data-icon="carbon:phone-filled" data-inline="false"></span> {{ tool.user.phone }}</p>
+                    <p class="user-tool-mail"><span class="iconify" data-icon="ic:round-email" data-inline="false"></span> {{ tool.user.email }}</p> #}
+                    <a href="{{ path('messages_send', {'id': tool.user.id}) }}" class="mt-5" ><span class="iconify" data-icon="ic:sharp-mail" data-inline="false"></span> Contacter</a>
+                </div>
+                <div class="user-tool-map col-md-2">
+                    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+                    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script><script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+                    <div id="mapidtool" style="width: 180px; height: 180px;"></div>
+                </div>
+            </div>
+
+            {% else %}
+            <div class="row d-flex justify-content-between border-bottom mb-5">
+                <a class="retour" href="{{ path('user_read') }}"><span class="iconify" data-icon="dashicons:arrow-left" data-inline="false"></span> Retourner sur mon Bric O'space</a>
+                <div class="edit-row">
+                    {% if is_granted('EDIT', tool)%}
+                        <a href="{{ path('tool_edit', {'id': tool.id}) }}" class="tool edit" alt="éditer" title="Éditer"><span class="iconify" data-icon="akar-icons:edit" data-inline="false"></span></a>
+                    {% endif %}
+                    {% if is_granted('DELETE', tool) %}
+                        <form action="{{ path('tool_delete', {'id': tool.id}) }}" method="post" class="d-inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet Outil?');">
+                            <input type="hidden" name="_method" value="delete">
+                            <button class="tool delete"><span class="iconify" data-icon="typcn:delete-outline" data-inline="false"></span></button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+
+        <div class="row">
+            <div class="image-tool col-3 text-center mb-4">
+                {% for image in tool.images %}
+                <img src="{{ asset('/assets/images/tools/'~image.name) | imagine_filter('miniature_tool') }}" alt="">
+                {% endfor %}
+            </div>
+            <div class="description col-3">
+                <h4><span class="iconify" data-icon="jam:document-f" data-inline="false"></span> Description</h4>
+                <p>{{ tool.description|raw }}</p>
+            </div>
+            <div class="tool-edit col-3">
+                <div class="list-group list-group-flush">
+                    <div class="description__list">
+                        <h5>Catégorie</h5>
+                        <p>{{ tool.toolCategory}}</p>
+                    </div>
+                    <div class="description__list">
+                        <h5>Marque</h5>
+                        <p>{{ tool.brand }}</p>
+                    </div>
+                </div>
+            </div>       
+            <div class="disponibilities col-3">
+                <div class="dispos-title">
+                    <h4>
+                        <span class="iconify" data-icon="clarity:calendar-solid" data-inline="false"></span> Réservation
+                    </h4>
+                    {% if app.user == tool.user %}
+                        {% if tool.isactivate == true %}
+                            <a class="bouton" style="font-size:0.9em;" href="{{ path('tool_desactivate', {'id': tool.id}) }}">Désactiver cet outil</a>
+                        {% else %}
+                            <a class="bouton" style="font-size:0.9em;" href="{{ path('tool_reactivate', {'id': tool.id}) }}">Réactiver cet outil</a>
+                        {% endif %}
+            
+                    {% else %}
+                </div>
+                <div>
+                        {% if tool.isactivate == true %}
+                            {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                    <button type="submit" class="bouton">Réserver cet outil</button>
+                            {{ form_end(form) }}
+                        {% else %}
+                            <div>Cet outil est indisponible</div>
+                        {% endif %}
+                    {% endif %}
+                
+                </div>
+                <div>
+                    {% for booking in tool.bookings %}
+                        <ul class="list-group list-group-flush ">
+                            <li class="list-group-item">L'outil est réservé du : {{ booking.startdate|date("d/m/Y") }} au {{ booking.enddate|date("d/m/Y") }} <br>Par : {{ booking.booker.lastname }} {{ booking.booker.firstname }}</li>
+                            <li class="list-group-item booking-dates">
+                                {% if is_granted('EDIT', booking)%}
+                                    <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="tool edit" alt="éditer" title="Éditer"><span class="iconify" data-icon="akar-icons:edit" data-inline="false"></span>Modifier la réservation</a>
+                                {% endif %}
+
+                                {% if is_granted('DELETE', booking)%}
+                                    <form method="post" action="{{ path('booking_delete', {'id':booking.id}) }}">
+                                        <input type="hidden" name="_method" value="POST">
+                                        <button class="btn delete"><a class="tool delete"><span class="iconify delete" data-icon="typcn:delete-outline" data-inline="false"></span>Annuler la réservation</a></button>
+                                    </form>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block javascripts %}
+    <script>
+        function init(){
+        let city = document.querySelector('.citytool').textContent;
+        let cp = document.querySelector('.cptool').textContent;
+
+        $.ajax({
+            //URL de l'API
+            url: "https://api-adresse.data.gouv.fr/search/?q=f"+city+"%20"+cp+"&type=municipality&autocomplete=1",
+            //Méthode appelée lorsque le téléchargement a fonctionné
+            success: function(geojson) {
+                //Affichage des données dans la console
+                console.log(geojson.features[0].geometry.coordinates[0]);
+            var map = L.map('mapidtool', {
+                center: [geojson.features[0].geometry.coordinates[1], geojson.features[0].geometry.coordinates[0]],
+                zoom: 11 });
+            L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                minZoom: 1,
+                maxZoom: 20
+                }).addTo(map);
+            },
+            
+            //Méthode appelée lorsque le téléchargement a échoué
+            error: function() {
+                alert("Erreur lors du téléchargement !");
+            }      
+        });}
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#booking_startDate, #booking_endDate').datepicker({
+                format: 'dd/mm/yyyy',
+                datesDisabled: [
+                    {% for day in tool.notAvailableDays %}
+                        "{{ day.format('d/m/Y') }}",
+                    {% endfor %}
+                ], 
+                startDate: new Date()
+            });
+        })
+    </script>
+
+{% endblock %}
+
+{% endblock %}

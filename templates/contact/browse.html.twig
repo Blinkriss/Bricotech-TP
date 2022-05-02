@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact us{% endblock %}
+
+{% block body %}
+
+<section  class="row static">
+    <div class="image col-md"><img src="{{ asset('assets/images/charte/contact.png') }}"></div>
+    <div class="text col-md align-self-center">
+        <h1><small>La Bric O’tech :</small><br>
+            Contactez-nous !
+        </h1>
+        <p class="contact">Une question, une suggestion ?<br>N'hésitez pas à nous contacter !</p>
+        <div class="contact">
+            <input type="text" value="Nom">
+            <input type="text" value="Email">
+            <input type="text" value="Sujet">
+            <textarea type="textarea">Message</textarea>
+            <button class="bouton">Envoyer</button>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

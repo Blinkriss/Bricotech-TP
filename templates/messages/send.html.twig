@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La Bric O'tech - Messagerie{% endblock %}
+
+{% block body %}
+<div class="main-title">
+    <h1>Envoyer un message</h1>
+</div>
+
+<section class="row col-10 m-auto">
+    <div class="content-details col">
+        <div class="row border-top border-bottom py-3 mb-5 d-flex">
+            <a href="{{ path("messages_received") }}" class="bouton">Boîte de réception</a>
+            <a href="{{ path("messages_sent") }}" class="bouton ms-5">Eléments envoyés</a>
+        </div>
+
+        <h3>Envoyer un message</h3>
+
+        {{ form_start(form) }}
+            {# {{ form_row (form.recipient)}} #}
+            {{ form_row (form.title)}}
+            {{ form_row (form.message)}}
+            <button class="bouton">Envoyer</button>
+        {{ form_end(form) }}
+
+    </div>
+</section>
+{% endblock %}

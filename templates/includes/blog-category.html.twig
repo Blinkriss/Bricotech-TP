@@ -1,0 +1,23 @@
+<div class="leftmenu col-xl-2 col-lg">
+    <div class="info">Catégories</div>    
+    <ul class="list-group list-group-flush">
+        {% for category in categories %} 
+            <li class="list-group-item">
+                <a href="{{ path ('blog_article_list', {'id': category.id}) }}">{{ category.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="dropdown">
+        <a class="dropdown-toggle" id="dropdownMenuButton2" href="#" alt="page profile" title="User page" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="user-name">Catégories</span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        {% for category in categories %} 
+            <li>
+                <a class="dropdown-item" href="#">{{ category.name }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>

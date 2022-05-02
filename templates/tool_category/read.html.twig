@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Une catégorie d'outil{% endblock %}
+
+{% block body %}
+{% if filterResponse is not empty %}
+{% for tool in filterResponse %}
+    <div class="tools-item col-2"><img class="tool-avatar" src="/assets/images/perceuse.png" alt="nom de l'outil">{{ tool.name }}<a class="bouton" href="{{ path('tool_edit',{'id':tool.id}) }}">Gérer</a></div>
+{% endfor %}
+{% endif %}
+
+{% endblock %}

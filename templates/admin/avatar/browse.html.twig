@@ -1,0 +1,31 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}La Bric O'tech - Avatars{% endblock %}
+
+{% block body %}
+<h2>Avatars</h2>
+<a href="{{ path('admin_avatar_add') }}" class="bouton">Ajouter un avatar</a>
+<table class="table table-striped table-hover">
+<thead>
+    <tr>
+    <th scope="col">#</th>
+    <th scope="col">Prévisualisation</th>
+    <th scope="col" class="col-1">Action</th>
+    </tr>
+</thead>
+<tbody>
+    {% for avatar in avatar %}
+        <tr>
+        <th scope="row">{{ avatar.id }}</th>
+        <td><img src="{{ asset('assets/images/avatars/'~avatar.name)}}" class="avatar" alt=""></td>
+        <td>
+            <form action="{{ path('admin_avatar_delete', {'id': avatar.id}) }}" method="post" class="d-inline">
+                <input type="hidden" name="_method" value="delete">
+                <button class="delete"><span class="iconify" data-icon="typcn:delete-outline" data-inline="false"></span></button>
+            </form>
+        </td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

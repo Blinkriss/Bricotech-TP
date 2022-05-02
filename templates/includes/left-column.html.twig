@@ -1,0 +1,72 @@
+
+                <div class="profil col-xl-2">
+                    <div class="left-column-desktop">
+                        <div class="nameandpic">
+                            <img src="{{ asset('assets/images/avatars/'~app.user.avatar.name) }}" class="nameandpic-pic">
+                            <p class="nameandpic-name">{% if app.user %}{{ app.user.firstname}} {{app.user.lastname}}{% endif %}</p>
+                        </div>
+                       {#  <div class="phone">
+                            <p><span class="iconify yellow" data-icon="carbon:phone-filled" data-inline="false"></span> {% if app.user %}{{ app.user.phone }}{% endif %}</p> 
+                        </div>
+                        <div class="mail">
+                            <p><span class="iconify yellow" data-icon="ic:round-email" data-inline="false"></span> {% if app.user %}{{ app.user.email}}{% endif %}</p> 
+                        </div> #}
+                        <a href="{{ path("messages_received") }}" class="bouton messagerie">Accéder à ma messagerie</a>
+                        <div class="content-column">
+                            <div class="adresse">
+                                <h5 class="yellow"><span class="iconify yellow" data-icon="ant-design:home-filled" data-inline="false"></span> Adresse</h5> 
+                            <p class="mb-0">{% if app.user %}{{ app.user.address}}</p>{% endif %} 
+                            <p class="cp d-inline">{% if app.user %}{{ app.user.postalcode}}</p>
+                            <p class="city d-inline">{{ app.user.city }}{% endif %}</p>
+
+                            </div>
+                            <div class="map-column mt-3">
+                                <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+                                <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script><script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+                                <div id="mapid" style="width: 200px; height: 200px; margin:auto;"></div>
+                            </div>
+                            <div class="talents">
+                                <h5 class="yellow mt-3"><span class="iconify yellow" data-icon="grommet-icons:user-worker" data-inline="false"></span> Mes talents</h5>
+                                {# {% if user.talents is defined %} #}
+                                <ul class="list-group list-group-flush">
+                                <!-- MANQUE LA POSSIBILITE D AJOUTER ET SUPPRIMER DES TALENTS DE SON PROFIL -->
+                                {% for talent in app.user.talents %}
+                                    <li class="list-group-item">{{ talent.name }}</li>
+                                {% endfor %}
+                                {# {% endif %} #}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>                     
+                <script>
+                    function init(){
+                    let city = document.querySelector('.city').textContent;
+                    let cp = document.querySelector('.cp').textContent;
+
+                    $.ajax({
+                                //URL de l'API
+                                url: "https://api-adresse.data.gouv.fr/search/?q=f"+city+"%20"+cp+"&type=municipality&autocomplete=1",
+                                //Méthode appelée lorsque le téléchargement a fonctionné
+                                success: function(geojson) {
+                                    //Affichage des données dans la console
+                                    console.log(geojson.features[0].geometry.coordinates[0]);
+                                var map = L.map('mapid', {
+                                    center: [geojson.features[0].geometry.coordinates[1], geojson.features[0].geometry.coordinates[0]],
+                                    zoom: 12 });
+                                L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                                    attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                                    minZoom: 1,
+                                    maxZoom: 20
+                                    }).addTo(map);
+                                },
+                                
+                                //Méthode appelée lorsque le téléchargement a échoué
+                                error: function() {
+                                    alert("Erreur lors du téléchargement !");
+                                }      
+                            });}
+                    document.addEventListener('DOMContentLoaded', init);
+                </script>
+
+

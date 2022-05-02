@@ -1,0 +1,60 @@
+<header>
+<div class="header-left navbar">
+{% set currentPage = app.request.get('_route') %}
+    <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% if app.user %} {{ path('user_read')}} {% else %} {{ path('homepage') }} {% endif %}"><img src="{{ asset('assets/images/charte/BricOtech_Logo400x70px.png') }}" class="img-fluid"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+            <a class="nav-link {% if currentPage == 'homepage' %} active{% endif %}" aria-current="page" href="{% if app.user %} {{ path('user_read')}} {% else %} {{ path('homepage') }} {% endif %}"><span class="iconify" data-icon="ant-design:home-filled" data-inline="false"></span><small>Accueil</small></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link{% if currentPage == 'blog_article_browse' %} active{% endif %}" href="{{ path('blog_article_browse') }}"><span class="iconify" data-icon="ic:baseline-library-books" data-inline="false"></span><small>Le blog</small></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link{% if currentPage == 'faq_browse' %} active{% endif %}" href="{{ path('faq_browse') }}"><span class="iconify" data-icon="vaadin:question-circle" data-inline="false"></span><small>FAQ</small></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link{% if currentPage == 'static_about' %} active{% endif %}" href="{{ path('static_about') }}"><span class="iconify" data-icon="bi:info-circle" data-inline="false"></span><small>À propos</small></a>
+            </li>
+        </ul>
+        </div>
+    </div>
+    </nav>
+{% if app.user %}
+{#}
+    <div id="search">
+    <span class="iconify" data-icon="entypo:magnifying-glass" data-inline="false"></span>
+    </div>
+{#}
+</div>
+<div class="user-connected dropdown">
+    <a class="dropdown-toggle" id="dropdownMenuButton1" href="#" alt="page profile" title="User page" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="iconify" data-icon="carbon:user-avatar-filled" data-inline="false"></span>
+        <span class="user-name">Bonjour {{ app.user.firstname }}</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="{{ path('user_edit') }}">Modifier mon profil</a></li>
+        <li><a class="dropdown-item" href="{{ path('booking_browse') }}">Voir mes réservations</a></li>
+        {% for role in app.user.roles %}
+        {% if role == 'ROLE_ADMIN' %}
+        <li><a class="dropdown-item" href="{{ path('admin_home') }}">Accéder à l'administration</a></li>
+        {% endif %}
+        {% endfor %}
+        <li><a class="dropdown-item disconnecte" href="{{ path('app_logout') }}">Déconnexion</a></li>
+    </ul>
+</div>
+{% else %}
+    <div class="connexion">
+      <a class="inversed" href="{{ path('app_login') }}" alt="connexion" title="Connection">Connexion</a>
+      <a href="{{ path('user_add') }}" alt="connexion" title="Inscription">Inscription</a>
+    </div>
+{% endif %}
+
+</header>
+
+<main>

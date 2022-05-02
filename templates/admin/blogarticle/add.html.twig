@@ -1,0 +1,14 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}La Bric O'tech - Ajouter un article au blog{% endblock %}
+
+{% block body %}
+
+<h2>Ajouter un article au blog</h2>
+
+{{ form_start(form) }}
+    {{ form_widget (form)}}
+    <button class="bouton">Ajouter</button>
+{{ form_end(form) }}
+
+{% endblock %}

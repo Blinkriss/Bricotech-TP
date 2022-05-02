@@ -1,0 +1,26 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier un outil{% endblock %}
+
+{% block body %}
+
+<h1>Modifier un outil</h1>
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+        {% if app.request.attributes.get('_route') == 'admin_tool_edit' %}
+            {% for image in tool.images %}
+                <div>
+                    <img src="{{ asset('assets/images/tools/'~image.name) }}" alt="" width="150">
+
+                    <a href="{{ path('admin_tool_delete_image', {id: image.id})}}" data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer</a>
+                </div>
+            {% endfor %}
+        {% endif %} 
+    <button type="submit" class="bouton">Modifier l'outil</button>
+{{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/deleteImages.js') }}"></script>
+{% endblock %}

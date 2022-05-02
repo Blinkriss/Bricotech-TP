@@ -1,0 +1,42 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}La Bric O'tech - Liste des utilisateurs{% endblock %}
+
+{% block body %}
+
+<h2>Les réservations</h2>
+
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Outil</th>
+					<th scope="col">Réservé par</th>
+					<th scope="col">Modifier la réservation</th>
+					<th scope="col">Supprimer la réservation</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for booking in bookings %}
+					<tr>
+						<td>{{booking.tool}}</td>
+						<td>{{booking.tool.getUser.firstname}}</td>
+						<td>
+							<a href="{{ path('admin_booking_edit', {'id': booking.id}) }}" class="tool edit" alt="éditer" title="Éditer">
+								<span class="iconify" data-icon="akar-icons:edit" data-inline="false"></span></a>
+						</td>
+						<td>
+							<form method="post" action="{{ path('admin_booking_delete', {'id':booking.id}) }}">
+								<input type="hidden" name="_method" value="POST">
+								<button class="btn delete">
+									<a class="tool delete">
+										<span class="iconify delete" data-icon="typcn:delete-outline" data-inline="false"></span></a>
+								</button>
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+
+<h1>Bienvenue sur l'admin de La Bric O'tech</h1>
+
+<h3>Gestion de La Bric O'tech</h3>
+
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="ant-design:user-outlined" data-inline="false"></span><br>Utilisateur</div>
+        <a class="home-links-right" href="{{ path('admin_user_browse') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="carbon:user-avatar-filled" data-inline="false"></span><br>Avatars</div>
+        <a class="home-links-right" href="{{ path('admin_avatar_browse') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify yellow" data-icon="grommet-icons:user-worker" data-inline="false"></span><br>Talents</div>
+        <a class="home-links-right" href="{{ path('admin_talent') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="fa-solid:tools" data-inline="false"></span><br>Outils</div>
+        <a class="home-links-right" href="{{ path('admin_tool_browse') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+     <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="fa-solid:tools" data-inline="false"></span><br>Catégories Outils</div>
+        <a class="home-links-right" href="{{ path('admin_tool_category_browse') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="raphael:people" data-inline="false"></span><br>Bricosphères</div>
+        <a class="home-links-right" href="{{ path('admin_bricosphere_browse') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="raphael:people" data-inline="false"></span><br>Images bricosphères</div>
+        <a class="home-links-right" href="{{ path('admin_imagebricosphere_browse') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+
+<h3>Gestion des pages statiques</h3>
+
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="vaadin:question-circle" data-inline="false"></span><br>FAQ</div>
+        <a class="home-links-right" href="{{ path('admin_faq_browse') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="bi:info-circle" data-inline="false"></span><br>À propos</div>
+        <a class="home-links-right" href="#"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+
+<h3>Gestion du blog</h3>
+
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="bx:bxs-category" data-inline="false"></span><br>Catégories</div>
+        <a class="home-links-right" href="{{ path('admin_blog_category_browse') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+
+    <div class="home-links col-xl-2 col-md-3">
+        <div class="home-links-left"><span class="iconify" data-icon="ri:article-line" data-inline="false"></span><br>Article</div>
+        <a class="home-links-right" href="{{ path('admin_blog_article_browse') }}"><span class="iconify" data-icon="fe:arrow-right" data-inline="false"></span>Gérer</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La Bric O'tech - Votre réservation{% endblock %}
+
+{% block body %}
+<section  class="row col-10 m-auto booking_success">
+    <div  class="col booking_success">
+        <div class="user-tool row border-top border-bottom py-3 mb-5">
+            <h4 class="row border-bottom pb-3 mb-3 booking_title">Vous avez bien réservé l'outil : </h4>
+            <p class="user-tool-address font-l"><span class="iconify light-blue l" data-icon="fa-solid:tools" data-inline="false"></span> {{ currentBooking.tool.name }} </p>
+            <p class="user-tool-address font-l"><span class="iconify dark-blue l" data-icon="carbon:user-avatar-filled" data-inline="false"></span> Appartenant à : {{ currentBooking.tool.user }} </p>
+            <p class="user-tool-address font-l"><span class="iconify green l" data-icon="bi-calendar-check-fill" data-inline="false"></span> Du : {{ currentBooking.startDate|date('d/m/Y')}}</p>
+            <p class="user-tool-address font-l"><span class="iconify red l" data-icon="bi-calendar-x-fill" data-inline="false"></span> Au : {{ currentBooking.endDate|date('d/m/Y')}}</p>
+            <a href="{{ path('tool_read', {'id': currentBooking.tool.id}) }}" class="tool edit font-l" alt="Retour" title="Retour">Retourner sur la page de l'outil</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

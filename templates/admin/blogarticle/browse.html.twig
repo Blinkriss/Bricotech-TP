@@ -1,0 +1,45 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}La Bric O'tech - le blog{% endblock %}
+
+{% block body %}
+
+<h2>Articles du blog</h2>
+
+<a href="{{ path('admin_blog_article_add') }}" class="bouton">Ajouter un article</a> <br>
+
+<table class="table table-striped table-hover">
+<thead>
+    <tr>
+    <th scope="col">#</th>
+    <th scope="col">Titre</th>
+    <th scope="col">Catégorie</th>
+    <th scope="col">Date de création</th>
+    <th scope="col" class="col-1">Action</th>
+    </tr>
+</thead>
+<tbody>
+{% for blogarticle in blogarticles %}
+    <tr>
+    <th scope="row">{{ blogarticle.id }}</th>
+    <td>{{ blogarticle.title }}</td>
+    <td>{{ blogarticle.blogcategory }}</td>
+    <td>{{ blogarticle.createdAt|date("d/m/Y")}}
+    </td>
+    <td>
+        <a href="{{ path('admin_blog_article_edit', {'id': blogarticle.id}) }}" class="edit" alt="éditer" title="Éditer">
+            <span class="iconify" data-icon="akar-icons:edit" data-inline="false"></span>
+        </a>
+
+        <form action="{{ path('admin_blog_article_delete', {'id': blogarticle.id}) }}" method="post" class="d-inline">
+            <input type="hidden" name="_method" value="DELETE">
+            <button class="delete"><span class="iconify" data-icon="typcn:delete-outline" data-inline="false"></span></button>
+        </form>
+    </td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+
+
+{% endblock %}

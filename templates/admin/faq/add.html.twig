@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}La Bric O'tech-FAQ{% endblock %}
+
+{% block body %}
+
+<h2>Ajouter une question et sa réponse</h2>
+
+{{ form_start(form) }}
+   
+    {{ form_widget (form)}}
+
+    <button class="bouton">Ajouter</button>
+
+{{ form_end(form) }}
+
+
+{% endblock %}

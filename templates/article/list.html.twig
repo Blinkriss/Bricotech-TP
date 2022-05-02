@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article de la categorie nom de la catégorie {% endblock %}
+
+{% block body %}
+
+<div class="main-title">
+    <h1>Le Blog</h1>
+</div>
+<section  class="row col-10 m-auto blog">    
+    <div class="text col-md align-self-center">
+        {% for articleList in articleList %}
+        <article class="preview">
+            <h2 class="blogtitle">{{ articleList.title }}</h2>
+            <span>Publié le {{ articleList.createdAt|date('d/m/Y') }} dans la catégorie {{ articleList.blogCategory}}</span>
+            <p>{{ articleList.content|slice(0, 350)|raw}} [...]</p>
+        </article>
+        <a href="{{ path('blog_article_read', {'id': articleList.id}) }}" class="bouton">Lire la suite</a>
+        {% endfor %}
+        {{ knp_pagination_render(articleList, 'includes/pagination.html.twig') }}
+    </div>
+</section>
+
+{% endblock %}
